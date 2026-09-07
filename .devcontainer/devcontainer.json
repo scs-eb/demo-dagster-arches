@@ -6,6 +6,13 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:4": {
+        "moby": false // Because running on debian 'trixie' and 'moby-cli' and related system packages are not available in that distribution. 
+      }
+  },
+
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
@@ -20,6 +27,7 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-python.pylint",
+        "ms-azuretools.vscode-containers",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg",
         "hediet.vscode-drawio"

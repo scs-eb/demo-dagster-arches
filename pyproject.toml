@@ -7,5 +7,6 @@ name = "demo-dagster-arches"
 version = "0.0.1"
 requires-python = ">=3.11"
 dependencies = [
-    "pylint"
+    "pylint",
+    "arches-containers"
 ]
