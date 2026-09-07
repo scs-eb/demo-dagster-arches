@@ -14,6 +14,22 @@
                     "remoteRoot": "/web_root"
                 }
             ]
+        },
+        {
+            "name": "Debug Dagster",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "port": 5679,
+                "host": "localhost"
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/demo-dagster/demo_dagster/src",
+                    "remoteRoot": "/app/demo_dagster/src"
+                }
+            ],
+            "subProcess": false
         }
     ]
 }
