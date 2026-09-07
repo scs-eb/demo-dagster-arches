@@ -15,10 +15,18 @@
   },
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [8002],
+	"forwardPorts": [8002,3000,3333],
   "portsAttributes": {
     "8002": {
       "label": "Demo Arches",
+      "onAutoForward": "notify"
+    },
+    "3000": {
+      "label": "Dagster",
+      "onAutoForward": "notify"
+    },
+    "3333": {
+      "label": "OpenRefine",
       "onAutoForward": "notify"
     }
   },
