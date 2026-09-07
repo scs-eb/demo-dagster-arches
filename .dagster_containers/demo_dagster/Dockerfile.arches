@@ -1,0 +1,34 @@
+ARG ARCHES_APP_IMAGE=arches-app
+ARG DAGSTER_APP_IMAGE=dagster-app
+FROM $DAGSTER_APP_IMAGE AS base
+
+FROM $ARCHES_APP_IMAGE AS prod
+
+ARG ARCHES_CLI_IMAGE
+ENV DAGSTER_CURRENT_IMAGE=$ARCHES_CLI_IMAGE
+
+COPY --from=base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+COPY --from=base /usr/local/bin /usr/local/bin
+COPY --from=base /app/demo_dagster /app/demo_dagster
+
+# Run dagster code server on port 4000
+EXPOSE 4000
+
+HEALTHCHECK --timeout=1s --start-period=3s --interval=3s --retries=20 CMD ["dagster", "api", "grpc-health-check", "-p", "4000"]
+
+WORKDIR /app/demo_dagster/src
+
+# CMD allows this to be overridden from run launchers or executors to execute runs and steps
+CMD ["dagster", "code-server", "start", "-h", "0.0.0.0", "-p", "4000", "-f", "demo_dagster/definitions.py"]
+
+FROM prod AS dev
+
+COPY --from=base /usr/local/lib/python3.13/site-packages /app/_app-env/lib/python3.13/site-packages
+
+RUN pip install debugpy
+
+# Remote debugging port
+EXPOSE 5680
+
+ENTRYPOINT ["python", "-m", "debugpy", "--listen", "0.0.0.0:5680", "-m"]
+CMD ["dagster", "code-server", "start", "-h", "0.0.0.0", "-p", "4000", "-f", "demo_dagster/definitions.py"]
