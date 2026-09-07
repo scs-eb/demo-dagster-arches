@@ -15,7 +15,13 @@
   },
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [8002],
+  "portsAttributes": {
+    "8002": {
+      "label": "Demo Arches",
+      "onAutoForward": "notify"
+    }
+  },
 
 	// Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "pip install -e ${containerWorkspaceFolder}",
