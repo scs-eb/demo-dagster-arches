@@ -1,0 +1,9 @@
+{
+    "project_name": "demo_arches",
+    "project_name_url_safe": "demo-arches",
+    "project_repo_directory": "demo-arches",
+    "project_hash": "c09fc",
+    "arches_version": "8.1",
+    "arches_repo_organization": "archesproject",
+    "arches_repo_branch": "stable/8.1.0"
+}
