@@ -1,0 +1,35 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+  "name": "demo-dagster-arches",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "pip install -e ${containerWorkspaceFolder}",
+
+	// Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "openFiles": ["README.md"],
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "hediet.vscode-drawio"
+      ]
+    },
+    "settings": {
+      "python.pythonPath": "/usr/local/bin/python",
+      "python.languageServer": "Pylance",
+      "python.linting.enabled": true,
+      "python.linting.pylintEnabled": true
+    }
+  }
+}
