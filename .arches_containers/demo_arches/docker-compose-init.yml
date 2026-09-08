@@ -1,0 +1,23 @@
+
+services:
+    demo-arches-c09fc:
+      container_name: demo-arches-c09fc
+      image: he/demo_arches-c09fc:base
+      build:
+        args:
+          - "PROJ_NAME=demo_arches"
+          - "PROJ_REPO_NAME=demo-arches"
+          - "DOCKER_PATH=./.arches_containers/demo_arches/docker"
+        context: ../..
+        dockerfile: ./.arches_containers/demo_arches/Dockerfile
+        target: base
+      command: create_project
+      volumes:
+        - ../..:/web_root
+      env_file:
+        - ./docker/env_file.env
+      ports:
+        - 8002:8000
+        - 5678:5678
+      stdin_open: true
+      tty: true

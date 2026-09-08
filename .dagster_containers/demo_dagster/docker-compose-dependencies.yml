@@ -1,0 +1,38 @@
+services:
+  db-demo-dagster:
+    container_name: db-demo-dagster
+    image: postgres:18-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      - postgres-log:/var/log/postgresql
+    env_file: 
+      - ./docker/env_file.env
+    ports:
+      - 5434:5432
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10k"
+        max-file: "10"
+    networks:
+      - demo_network
+
+  openrefine-demo-dagster:
+    container_name: openrefine-demo-dagster
+    image: ghcr.io/openrefine/containers:3.9.5
+    ports:
+      - 3333:3333
+    volumes:
+      - openrefine-data:/data
+    networks:
+      - demo_network
+
+volumes:
+  postgres-data:
+  postgres-log:
+  openrefine-data:
+
+networks:
+  demo_network:
+    driver: bridge
+    name: demo-dagster-network

@@ -1,0 +1,59 @@
+services:
+  demo-dagster:
+    container_name: demo-dagster
+    image: he/dagster:dev
+    build:
+      args:
+        PROJ_NAME: demo_dagster
+        PROJ_REPO_NAME: demo-dagster
+      context: ../..
+      dockerfile: ./.dagster_containers/demo_dagster/Dockerfile
+      target: dev
+    env_file: 
+      - ./docker/env_file.env
+    volumes:
+     - ..:/workspaces/demo-dagster-arches:cached
+     - dagster-data:/opt/dagster/dagster_home
+    ports:
+      - 3000:3000
+      - 5679:5679
+
+  base-code-location:
+    container_name: base-code-location
+    image: he/dagster:base
+    build:
+      args:
+        PROJ_NAME: demo_dagster
+        PROJ_REPO_NAME: demo-dagster
+      context: ../..
+      dockerfile: ./.dagster_containers/demo_dagster/Dockerfile
+      target: prod
+
+  arches-code-location: 
+    container_name: arches-code-location
+    image: he/arches-cli:dev
+    build: 
+      args:
+        ARCHES_APP_IMAGE: he/demo_arches-c09fc:dev_build
+        DAGSTER_APP_IMAGE: he/dagster:base
+        ARCHES_CLI_IMAGE: he/arches-cli:dev
+      context: ../..
+      dockerfile: ./.dagster_containers/demo_dagster/Dockerfile.arches
+      target: dev
+    env_file: 
+      - ./docker/env_file.env
+    depends_on:
+      - base-code-location
+    volumes:
+     - ..:/workspaces/demo-dagster-arches:cached
+     - dagster-data:/opt/dagster/dagster_home
+    ports:
+      - 5680:5680
+
+networks:
+  default:
+    external: true
+    name: demo-dagster-network
+
+volumes:
+  dagster-data:

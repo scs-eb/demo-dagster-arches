@@ -1,0 +1,51 @@
+{
+    "configurations": [
+        {
+            "name": "Debug Arches Project",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/web_root"
+                }
+            ]
+        },
+        {
+            "name": "Debug Dagster",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "port": 5679,
+                "host": "localhost"
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/demo-dagster/demo_dagster/src",
+                    "remoteRoot": "/app/demo_dagster/src"
+                }
+            ],
+            "subProcess": false
+        },
+        {
+            "name": "Debug Dagster Arches",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "port": 5680,
+                "host": "localhost"
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/demo-dagster/demo_dagster/src",
+                    "remoteRoot": "/app/demo_dagster/src"
+                }
+            ],
+            "subProcess": false
+        }
+    ]
+}
